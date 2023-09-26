@@ -29,30 +29,7 @@ To run this project locally, follow these steps:
 
    ```bash
    git clone https://github.com/aman-q/blogApp.git
- 1  Navigate to the project directory:
-   ```bash
-   cd blogApp
-2 Install the project dependencies:
-   ```bash
-npm install
-3 Start the development server
-```bash
-npm start
- content in the provided input fields.
-Click the "ADD" button to create a new blog post.
-To delete a blog post, click the "Delete" button next to the post.
-Project Structure
-The project is organized as follows:
 
-Blog.js: The main component that implements the blogging functionality using React hooks.
-Row.js: A reusable component for rendering input fields with labels.
-Blogreducer.js: A reducer function for managing the state of the blog posts.
-Dependencies
-The project relies on the following dependencies:
-
-React: A JavaScript library for building user interfaces.
-React DOM: A package for working with the DOM in React.
-Netlify: A platform for deploying web applications.
    
 
    
