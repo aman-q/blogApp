@@ -14,7 +14,7 @@ This is a simple React blog application that allows users to write and manage th
 
 ## Demo
 
-(demo)[https://lustrous-narwhal-787464.netlify.app/]
+Check out the live demo of the React Blog component here: [Demo](https://lustrous-narwhal-787464.netlify.app/)
 
 
 ## Features
