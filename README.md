@@ -7,15 +7,14 @@ This is a simple React blog application that allows users to write and manage th
 - [Demo](#demo)
 - [Features](#features)
 - [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Demo
 
-[https://lustrous-narwhal-787464.netlify.app/]
+(demo)[https://lustrous-narwhal-787464.netlify.app/]
 
 
 ## Features
@@ -69,8 +68,11 @@ Follow these instructions to get a copy of the project up and running on your lo
    If you'd like to contribute to this project, please follow these guidelines:
 
       1.Fork the repository on GitHub.
+   
       2.Create a new branch with a descriptive name.
+   
       3.Commit your changes and push them to your fork.
+   
       4.Submit a pull request with a clear description of your changes.
 
 
