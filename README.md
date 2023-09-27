@@ -58,19 +58,19 @@ Follow these instructions to get a copy of the project up and running on your lo
    yarn start
    ```
    2.Open your web browser and visit http://localhost:3000 to access the React Blog Application.
-
-  3.You can start writing blogs by entering a title and content in the respective fields and clicking the "ADD" button.
-
-  4.To delete a blog, click the "Delete" button next to the blog you want to remove.
-
-  5.The document title will automatically be updated with the title of the latest blog.
+  
+   3.You can start writing blogs by entering a title and content in the respective fields and clicking the "ADD" button.
+  
+   4.To delete a blog, click the "Delete" button next to the blog you want to remove.
+  
+   5.The document title will automatically be updated with the title of the latest blog.
 
    ### Contributing
    If you'd like to contribute to this project, please follow these guidelines:
 
-1.Fork the repository on GitHub.
-2.Create a new branch with a descriptive name.
-3.Commit your changes and push them to your fork.
-4.Submit a pull request with a clear description of your changes.
+      1.Fork the repository on GitHub.
+      2.Create a new branch with a descriptive name.
+      3.Commit your changes and push them to your fork.
+      4.Submit a pull request with a clear description of your changes.
 
 
