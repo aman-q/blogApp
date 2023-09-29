@@ -1,102 +1,139 @@
-import React, { useState, useRef, useEffect, useReducer } from "react";
+//Blogging App with Firebase
+import { useState, useRef, useEffect } from "react";
+import {db} from "./firebaseInit";
+import { collection, doc, getDocs, setDoc,onSnapshot,deleteDoc } from "firebase/firestore"; 
 
-function Blogreducer(state, action) {
-  switch (action.type) {
-    case "ADD":
-      return [action.blog, ...state];
-    case "DELETE":
-      return state.filter((_, index) => index !== action.index);
-    default:
-      return state;
-  }
-}
+export default function Blog(){
 
-export default function Blog() {
-  const [title, setTitle] = useState("");
-  const [blog, setBlog] = useState("");
-  const [blogs, dispatch] = useReducer(Blogreducer, []);
-  const titleRef = useRef(null);
+    const [formData, setformData] = useState({title:"", content:""})
+    const [blogs, setBlogs] =  useState([]);
 
-  useEffect(() => {
-    titleRef.current.focus();// It is use to bring the focous to title at intital rendering 
-  }, []);
+    const titleRef = useRef(null);
 
-  useEffect(() => {
-    if (blogs.length && blogs[0].title) {
-      document.title = blogs[0].title;
-    } else {
-      document.title = "My Blogs!!";
+    useEffect(() => {
+        titleRef.current.focus()
+    },[]);
+
+    useEffect(() => {
+        // async function fetchData(){
+        //     const snapShot =await getDocs(collection(db, "Blogs"));
+        //     console.log(snapShot);
+
+        //     const blogs = snapShot.docs.map((doc) => {
+        //         return{
+        //             id: doc.id,
+        //             ...doc.data()
+        //         }
+        //     })
+        //     console.log(blogs);
+        //     setBlogs(blogs);
+
+        // }
+
+        // fetchData();
+      
+        const unsub =onSnapshot(collection(db,"Blogs"),(snapShot)=>{
+
+          const blogs = snapShot.docs.map((doc) => {
+                    return{
+                        id: doc.id,
+                        ...doc.data()
+                    }
+                })
+                console.log(blogs);
+                setBlogs(blogs);
+
+        })
+    },[]);
+
+    async function handleSubmit(e){
+        e.preventDefault();
+        titleRef.current.focus();
+
+
+        const docRef = doc(collection(db, "Blogs"))
+            
+        await setDoc(docRef, {
+                title: formData.title,
+                content: formData.content,
+                createdOn: new Date()
+            });
+
+        
+        
+        setformData({title: "", content: "id"});
     }
-  }, [blogs]);
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    dispatch({ type: "ADD", blog: { title, blog } });
-    setBlog("");
-    setTitle("");
-    titleRef.current.focus();// each time we add the new blog the the focus came back to title
-  }
+    async function removeBlog(id){
 
-  function handelDel(index) {
-    dispatch({ type: "DELETE", index });
-  }
+      const docRef=doc(db,"Blogs",id);
+        await deleteDoc(docRef);
+ 
+     }
 
-  return (
-    <>
-      <h1><u>Write a Blog!</u></h1>
+    return(
+        <>
+        <h1>Write a Blog!</h1>
+        <div className="section">
 
-      <div className="section">
-        <form onSubmit={handleSubmit}>
-          <Row label="Title">
-            <input
-              className="input"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              ref={titleRef}
-              placeholder="Enter the Title of the Blog here.."
-            />
-          </Row>
+        {/* Form for to write the blog */}
+            <form onSubmit={handleSubmit}>
+                <Row label="Title">
+                        <input className="input"
+                                placeholder="Enter the Title of the Blog here.."
+                                ref = {titleRef}
+                                value={formData.title}
+                                onChange = {(e) => setformData({title: e.target.value, content:formData.content})}
+                        />
+                </Row >
 
-          <Row label="Content">
-            <textarea
-              className="input content"
-              value={blog}
-              onChange={(e) => setBlog(e.target.value)}
-              required
-              placeholder="Content of the Blog goes here.."
-            />
-          </Row>
-
-          <button className="btn">ADD</button>
-        </form>
-      </div>
-
-      <hr />
-
-      <h2><u>Blogs</u>  </h2>
-      {blogs.map((blog, index) => (
-        <div className="blog" key={index}>
-          <h3>{blog.title}</h3>
-          <p>{blog.blog}</p>
-
-          <div className="blog-btn">
-            <button className="remove" onClick={() => handelDel(index)}>
-              Delete
-            </button>
-          </div>
+                <Row label="Content">
+                        <textarea className="input content"
+                                placeholder="Content of the Blog goes here.."
+                                required
+                                value={formData.content}
+                                onChange = {(e) => setformData({title: formData.title,content: e.target.value})}
+                        />
+                </Row >
+         
+                <button className = "btn">ADD</button>
+            </form>
+                     
         </div>
-      ))}
-    </>
-  );
-}
 
-function Row(props) {
-  const { label } = props;
-  return (
-    <>
-      <label>{label}<br /></label>
-      {props.children}
-      <hr />
-    </>
-  );
+        <hr/>
+
+        
+        <h2> Blogs </h2>
+        {blogs.map((blog,i) => (
+            <div className="blog" key={i}>
+                <h3>{blog.title}</h3>
+                <hr/>
+                <p>{blog.content}</p>
+
+                <div className="blog-btn">
+                        <button onClick={() => {
+                             removeBlog(blog.id)
+                        }}
+                        className="remove">
+
+                            Delete
+
+                        </button>
+                </div>
+            </div>
+        ))}
+        
+        </>
+        )
+    }
+function Row(props){
+    const{label} = props;
+    return(
+        <>
+        <label>{label}<br/></label>
+        {props.children}
+        <hr />
+        </>
+    )
 }
