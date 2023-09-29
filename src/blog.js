@@ -1,7 +1,7 @@
 //Blogging App with Firebase
 import { useState, useRef, useEffect } from "react";
 import {db} from "./firebaseInit";
-import { collection, doc, getDocs, setDoc,onSnapshot,deleteDoc } from "firebase/firestore"; 
+import { collection, doc,  setDoc,onSnapshot,deleteDoc } from "firebase/firestore"; 
 
 export default function Blog(){
 
@@ -33,7 +33,7 @@ export default function Blog(){
         // fetchData();
       
         const unsub =onSnapshot(collection(db,"Blogs"),(snapShot)=>{
-
+         console.log(unsub);
           const blogs = snapShot.docs.map((doc) => {
                     return{
                         id: doc.id,
